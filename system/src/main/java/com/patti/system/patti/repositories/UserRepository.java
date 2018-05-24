@@ -1,8 +1,9 @@
 package com.patti.system.patti.repositories;
 
+import static com.patti.system.util.QueryUtil.USER_INSERT;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -23,15 +24,10 @@ public class UserRepository  {
 			 throw new UserException("User details not valid.");
 		}
 		
-		String insertSql =  "INSERT INTO user (" +
-							"name, " +
-							"mobile_no, " +
-							"email) " +
-							"VALUES (?, ?, ?)";
 		
 		int row;
 		try {
-			row = jdbcTemplate.update(insertSql,pss -> {pss.setString(1, user.getName());
+			row = jdbcTemplate.update(USER_INSERT,pss -> {pss.setString(1, user.getName());
 															pss.setString(2, user.getMobile_no());
 															pss.setString(3, user.getEmail());});
 		} catch (DataAccessException e) {

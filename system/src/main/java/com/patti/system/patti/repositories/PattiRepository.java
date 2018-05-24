@@ -1,4 +1,5 @@
 package com.patti.system.patti.repositories;
+import static com.patti.system.util.QueryUtil.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -18,21 +19,10 @@ public class PattiRepository {
 	private JdbcTemplate jdbcTemplate;
 	
 	public  Patti createPatti(Patti patti) {
-		String insertSql =  "INSERT INTO patti (" +
-			  	"	start_date, " +
-			  	"	amount_per_head, " +
-				"	open_day_month, " +
-				"	admin_user, " +
-				"	patti_type, " +
-				"	min_bid, " +
-				"	no_users, " +
-				"	is_open, " +
-				"	curr_month) " +
-				  "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		int row;
 		try {
-			row = jdbcTemplate.update(insertSql,pss -> {
+			row = jdbcTemplate.update(PATTI_INSERT,pss -> {
 														    pss.setDate(1,Date.valueOf(LocalDate.now()));
 															pss.setInt(2, patti.getAmount_per_head());
 															pss.setInt(3, patti.getOpen_day_month());
