@@ -40,7 +40,16 @@ public class RequestRepository {
 	}
 
 	public void verifyRequest(PattiRequest pattiRequest) {
-		String query = "";
+		String query = "update patti_request set verification_status = ? where p_id = ? and user_id = ?";
 		
+		try {
+			
+			jdbcTemplate.update(query, pss -> {pss.setInt(1, 3);
+									   pss.setInt(2, pattiRequest.getP_id());
+									   pss.setInt(3, pattiRequest.getUser_id());});
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new UserException("Verification Request fails for patti_id : "+pattiRequest.getP_id()+" and userId : "+pattiRequest.getUser_id());
+		}
 	}
 }
